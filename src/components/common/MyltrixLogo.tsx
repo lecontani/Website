@@ -1,66 +1,51 @@
-import React, { useState } from 'react';
-import { siteConfig } from '../../config/siteConfig';
+import React from 'react';
+import { useTheme } from '../../context/ThemeContext';
+import logoBlack from '../../assets/logo/myltrix-logo-black.png';
+import logoWhite from '../../assets/logo/myltrix-logo-white.png';
 
 interface MyltrixLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showText?: boolean;
-  subtitle?: string;
-  framed?: boolean;
   className?: string;
 }
 
-const SIZE_MAP = {
-  sm: 32,
-  md: 40,
-  lg: 56,
-  xl: 84,
+const HEIGHT_MAP: Record<NonNullable<MyltrixLogoProps['size']>, number> = {
+  sm: 28,
+  md: 32,
+  lg: 44,
+  xl: 72,
 };
 
 /**
- * Renders the official Myltrix logo without altering its shape or proportions.
- * Company name is strictly rendered as "Myltrix".
+ * Renders the official Myltrix geometric mark without altering proportions,
+ * automatically switching between the black PNG (light theme) and white PNG (dark theme).
  */
 export const MyltrixLogo: React.FC<MyltrixLogoProps> = ({
   size = 'md',
   showText = true,
-  subtitle,
-  framed = true,
   className = '',
 }) => {
-  const [imgError, setImgError] = useState(false);
-  const pixelSize = SIZE_MAP[size];
+  const { theme } = useTheme();
+  const logoSrc = theme === 'dark' ? logoWhite : logoBlack;
+  const heightPx = HEIGHT_MAP[size];
 
   return (
-    <div className={`myltrix-brand ${className}`}>
-      <div
-        className={`myltrix-logo-container ${framed ? 'myltrix-logo-framed' : 'myltrix-logo-adaptive'}`}
-        style={{ width: pixelSize, height: pixelSize }}
-      >
-        {!imgError ? (
-          <img
-            src={siteConfig.logoPath}
-            alt="Myltrix official logo"
-            className="myltrix-logo-image"
-            width={pixelSize}
-            height={pixelSize}
-            loading="eager"
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <div className="myltrix-logo-placeholder" aria-label="Myltrix logo slot">
-            <span>M</span>
-          </div>
-        )}
-      </div>
-
+    <span className={`myltrix-brand ${className}`}>
+      <img
+        src={logoSrc}
+        alt="Myltrix logo"
+        className="myltrix-logo-img"
+        style={{ height: `${heightPx}px`, width: 'auto' }}
+        width={Math.round((heightPx * 986) / 1024)}
+        height={heightPx}
+        loading="eager"
+        decoding="async"
+      />
       {showText && (
-        <div className="myltrix-brand-text">
-          <span className="myltrix-brand-name" style={{ textTransform: 'none' }}>
-            Myltrix
-          </span>
-          {subtitle && <span className="myltrix-brand-subtitle">{subtitle}</span>}
-        </div>
+        <span className="myltrix-brand-name" style={{ textTransform: 'none' }}>
+          Myltrix
+        </span>
       )}
-    </div>
+    </span>
   );
 };

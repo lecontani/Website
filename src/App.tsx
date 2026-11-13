@@ -9,9 +9,6 @@ import { HomePage } from './pages/HomePage';
 import { GamesPage } from './pages/GamesPage';
 import { GameDetailPage } from './pages/GameDetailPage';
 import { AboutPage } from './pages/AboutPage';
-import { NewsPage } from './pages/NewsPage';
-import { NewsDetailPage } from './pages/NewsDetailPage';
-import { ContactPage } from './pages/ContactPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export const App: React.FC = () => {
@@ -25,11 +22,8 @@ export const App: React.FC = () => {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/games" element={<GamesPage />} />
-                <Route path="/games/:slug" element={<GameDetailPage />} />
+                <Route path="/games/moonbound" element={<GameDetailPage />} />
                 <Route path="/about" element={<AboutPage />} />
-                <Route path="/news" element={<NewsPage />} />
-                <Route path="/news/:slug" element={<NewsDetailPage />} />
-                <Route path="/contact" element={<ContactPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </main>

@@ -1,34 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Compass, Gamepad2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
 
 export const NotFoundPage: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="404 — Page Not Found | Myltrix"
-        description="The requested page could not be found on the official Myltrix website."
+        title="Page Not Found — Myltrix"
+        description="The requested page could not be found on the Myltrix website."
       />
 
       <section className="section-block">
         <div className="container">
           <div className="not-found-box">
-            <div className="not-found-code">404</div>
-            <Compass size={32} className="not-found-icon" />
-            <h1 style={{ textTransform: 'none' }}>Sector Coordinates Not Found</h1>
-            <p>
-              The page you are looking for does not exist or has been relocated within the Myltrix
-              website.
+            <span className="section-eyebrow">404</span>
+            <h1 className="page-title">Page Not Found</h1>
+            <p className="page-subtitle">
+              The page you requested does not exist on the Myltrix website.
             </p>
             <div className="not-found-actions">
               <Link to="/" className="btn btn-primary">
                 <ArrowLeft size={16} />
-                <span>Return Home</span>
+                <span>Home</span>
               </Link>
-              <Link to="/games" className="btn btn-secondary">
-                <Gamepad2 size={16} />
-                <span>Explore Games</span>
+              <Link to="/games/moonbound" className="btn btn-secondary">
+                <span>Explore Moonbound</span>
+                <ArrowRight size={16} />
               </Link>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, Moon, Sun, X, ArrowUpRight } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { MyltrixLogo } from '../common/MyltrixLogo';
 
@@ -12,28 +12,17 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { label: 'Home', path: '/' },
   { label: 'Games', path: '/games' },
-  { label: 'About Us', path: '/about' },
-  { label: 'News', path: '/news' },
-  { label: 'Contact', path: '/contact' },
+  { label: 'About', path: '/about' },
 ];
 
 export const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 16);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -46,14 +35,12 @@ export const Navbar: React.FC = () => {
   }, [mobileMenuOpen]);
 
   return (
-    <header className={`site-header ${scrolled ? 'site-header-scrolled' : ''}`}>
+    <header className="site-header">
       <div className="container header-inner">
-        {/* Left: Myltrix Logo & Name */}
         <Link to="/" className="header-logo-link" aria-label="Myltrix Home">
-          <MyltrixLogo size="md" showText={true} framed={true} />
+          <MyltrixLogo size="sm" showText={true} />
         </Link>
 
-        {/* Right: Desktop Navigation & Theme Switcher */}
         <div className="header-right">
           <nav className="desktop-nav" aria-label="Primary Navigation">
             <ul className="nav-list">
@@ -79,11 +66,9 @@ export const Navbar: React.FC = () => {
               onClick={toggleTheme}
               className="theme-toggle-btn"
               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-              title={`Current theme: ${theme === 'dark' ? 'Dark' : 'Light'}. Click to switch.`}
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
             >
-              <span className="theme-toggle-icon">
-                {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
-              </span>
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
               <span className="theme-toggle-label">
                 {theme === 'dark' ? 'Light' : 'Dark'}
               </span>
@@ -97,13 +82,13 @@ export const Navbar: React.FC = () => {
               aria-controls="mobile-dropdown-menu"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Navigation Drawer */}
       <div
         id="mobile-dropdown-menu"
         className={`mobile-dropdown ${mobileMenuOpen ? 'mobile-dropdown-open' : ''}`}
@@ -122,27 +107,12 @@ export const Navbar: React.FC = () => {
                     }
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <span>{item.label}</span>
-                    <ArrowUpRight size={16} className="mobile-nav-arrow" />
+                    {item.label}
                   </NavLink>
                 </li>
               ))}
             </ul>
           </nav>
-
-          <div className="mobile-dropdown-footer">
-            <div className="mobile-theme-row">
-              <span className="mobile-theme-caption">Appearance Mode</span>
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="theme-toggle-btn mobile-theme-switch"
-              >
-                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-                <span>Switch to {theme === 'dark' ? 'Light' : 'Dark'} Theme</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 

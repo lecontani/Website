@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ThemeMode } from '../types';
+import logoBlack from '../assets/logo/myltrix-logo-black.png';
+import logoWhite from '../assets/logo/myltrix-logo-white.png';
 
 interface ThemeContextValue {
   theme: ThemeMode;
@@ -40,7 +42,12 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) {
-      metaTheme.setAttribute('content', theme === 'dark' ? '#09090b' : '#fafafa');
+      metaTheme.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#ffffff');
+    }
+
+    const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    if (favicon) {
+      favicon.href = theme === 'dark' ? logoWhite : logoBlack;
     }
   }, [theme]);
 
