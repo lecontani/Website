@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { ScrollToTop } from './components/common/ScrollToTop';
@@ -18,7 +18,7 @@ export const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <BrowserRouter>
+        <HashRouter>
           <div className="app-shell">
             <Navbar />
             <main className="app-main">
@@ -36,7 +36,7 @@ export const App: React.FC = () => {
             <Footer />
             <ScrollToTop />
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </ThemeProvider>
     </ErrorBoundary>
   );
